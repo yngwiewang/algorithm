@@ -8,7 +8,7 @@ import (
 func Bubble(nums []int) {
 	// 两层循环，第一次外层循环将最大数冒泡至最右侧位置，
 	// 第二次将次最大数冒泡至倒数第二位置
-	// 时间复杂度 O(n2)
+	// 时间复杂度 最好O(n)，最坏O(n2)，平均O(n2)
 	// 空间复杂度 O(1)
 	length := len(nums)
 	var swapped int
@@ -28,7 +28,7 @@ func Bubble(nums []int) {
 }
 
 func TestBubble(t *testing.T) {
-	nums := []int{4,6,5,2,3,1}
+	nums := []int{4, 6, 5, 2, 3, 1}
 	fmt.Println(nums)
 	Bubble(nums)
 	fmt.Println(nums)

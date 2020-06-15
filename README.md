@@ -1,1 +1,1 @@
-Implementation Algorithm and Data Structure in Golang.
+Implementing Algorithm and Data Structure in Golang.

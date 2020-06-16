@@ -22,6 +22,7 @@ func InsertionSort(nums []int) {
 	// 取未排序区间中的元素，在已排序区间中找到合适的位置将其插入
 	// 时间复杂度O(n2)
 	// 空间复杂度O(1)
+	// 稳定
 	length := len(nums)
 	for i := 1; i < length; i++ {
 		current := nums[i]

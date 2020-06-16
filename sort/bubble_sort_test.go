@@ -10,6 +10,7 @@ func BubbleSort(nums []int) {
 	// 第二次将次最大数冒泡至倒数第二位置
 	// 时间复杂度 最好O(n)，最坏O(n2)，平均O(n2)
 	// 空间复杂度 O(1)
+	// 稳定
 	length := len(nums)
 	var swapped bool
 	for i := length - 1; i >= 0; i-- {

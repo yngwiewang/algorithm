@@ -10,7 +10,7 @@ import (
 func RandomIntSlice() (r []int) {
 	rand.Seed(time.Now().UnixNano())
 
-	for i := 0; i < 100000; i++ {
+	for i := 0; i < 89000; i++ {
 		r = append(r, rand.Intn(1000000))
 	}
 	return
@@ -45,14 +45,14 @@ func TestInsertionSort(t *testing.T) {
 	fmt.Println("after:", nums)
 }
 
-func BenchmarkBubbleInsertion1(b *testing.B) {
-	nums := RandSlice
-	for i := 0; i < b.N; i++ {
-		BubbleSort(nums)
-	}
-}
+//func BenchmarkBubbleSort(b *testing.B) {
+//	nums := RandSlice
+//	for i := 0; i < b.N; i++ {
+//		BubbleSort(nums)
+//	}
+//}
 
-func BenchmarkBubbleInsertion2(b *testing.B) {
+func BenchmarkInsertionSort(b *testing.B) {
 	nums := RandSlice
 	for i := 0; i < b.N; i++ {
 		InsertionSort(nums)
@@ -62,3 +62,10 @@ func BenchmarkBubbleInsertion2(b *testing.B) {
 // 插入比冒泡交换元素次数少，性能更好
 //BenchmarkBubbleInsertion1-8            1        11977649400 ns/op
 //BenchmarkBubbleInsertion2-8        15739             74228 ns/op
+
+func BenchmarkMergeSort(b *testing.B) {
+	nums := RandSlice
+	for i := 0; i < b.N; i++ {
+		MergeSort(nums, 0, len(nums)-1)
+	}
+}

@@ -7,16 +7,16 @@ import (
 	"time"
 )
 
-func RandomIntSlice() (r []int) {
+func RandomIntSlice(n int) []int {
 	rand.Seed(time.Now().UnixNano())
-
-	for i := 0; i < 89000; i++ {
-		r = append(r, rand.Intn(1000000))
+	r := make([]int, n, n)
+	for i := 0; i < n; i++ {
+		r[i] = rand.Intn(1000)
 	}
-	return
+	return r
 }
 
-var RandSlice = RandomIntSlice()
+var RandSlice = RandomIntSlice(100000)
 
 func InsertionSort(nums []int) {
 	// 取未排序区间中的元素，在已排序区间中找到合适的位置将其插入
@@ -52,20 +52,82 @@ func TestInsertionSort(t *testing.T) {
 //	}
 //}
 
-func BenchmarkInsertionSort(b *testing.B) {
-	nums := RandSlice
-	for i := 0; i < b.N; i++ {
-		InsertionSort(nums)
-	}
-}
+//func BenchmarkInsertionSort(b *testing.B) {
+//	for i := 0; i < b.N; i++ {
+//		nums := RandSlice
+//		InsertionSort(nums)
+//	}
+//}
 
 // 插入比冒泡交换元素次数少，性能更好
 //BenchmarkBubbleInsertion1-8            1        11977649400 ns/op
 //BenchmarkBubbleInsertion2-8        15739             74228 ns/op
 
-func BenchmarkMergeSort(b *testing.B) {
-	nums := RandSlice
+//func BenchmarkMergeSort(b *testing.B) {
+//	for i := 0; i < b.N; i++ {
+//		nums := RandSlice
+//		MergeSort(nums, 0, len(nums)-1)
+//	}
+//}
+
+func BenchmarkQuickSort(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		MergeSort(nums, 0, len(nums)-1)
+		//nums:=RandomIntSlice(100000)
+		//b.StartTimer()
+		QuickSort(RandSlice, 0, len(RandSlice)-1)
+		//b.StopTimer()
 	}
 }
+
+func BenchmarkQuickSort2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		//nums:=RandomIntSlice(100000)
+		//b.StartTimer()
+		QuickSort2(RandSlice, 0, len(RandSlice)-1)
+		//b.StopTimer()
+	}
+}
+
+func BenchmarkQuickSort3(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		//nums:=RandomIntSlice(100000)
+		//b.StartTimer()
+		QuickSort3(RandSlice)
+		//b.StopTimer()
+	}
+}
+
+func BenchmarkQuickSort4(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		//nums:=RandomIntSlice(100000)
+		//b.StartTimer()
+		QC(RandSlice)
+		//b.StopTimer()
+	}
+}
+
+func BenchmarkRand1(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		rand.Seed(time.Now().UnixNano())
+		a := rand.Intn(100)
+		a = a >> 1
+	}
+}
+
+func BenchmarkRand2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		rand.Seed(time.Now().UnixNano())
+		a := rand.Int() % 100
+		a = a >> 1
+	}
+}
+
+//func TestQuick2(t *testing.T){
+//	nums := RandSlice
+//	QuickSort(nums,0,len(nums)-1)
+//	fmt.Println(nums)
+//	nums = RandSlice
+//	QuickSort1(nums,0,len(nums)-1)
+//	fmt.Println(nums)
+//
+//}

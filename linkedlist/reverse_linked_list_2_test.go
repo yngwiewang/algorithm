@@ -29,13 +29,13 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 func TestReverseBetween(t *testing.T) {
 	a := &ListNode{}
 	p := a
-	for i := 1; i < 3; i++ {
+	for i := 1; i < 6; i++ {
 		a.Next = &ListNode{i, nil}
 		a = a.Next
 	}
 	x := p.Next
 
-	y := reverseBetween(x, 2, 2)
+	y := reverseBetween(x, 3, 5)
 	for y != nil {
 		fmt.Printf("%d ", y.Val)
 		y = y.Next

@@ -33,7 +33,7 @@ import (
 //	return len(nums)
 //}
 
-func removeDuplicates(nums []int) int {
+func removeDuplicates1(nums []int) int {
 	if len(nums) < 2 {
 		return len(nums)
 	}
@@ -47,6 +47,17 @@ func removeDuplicates(nums []int) int {
 		}
 	}
 	return i + 1
+}
+
+func removeDuplicates(nums []int) int {
+	cur := 1
+	for i := 1; i < len(nums); i++ {
+		if nums[i] != nums[i-1] {
+			nums[cur] = nums[i]
+			cur++
+		}
+	}
+	return cur
 }
 
 func TestRemoveDup(t *testing.T) {

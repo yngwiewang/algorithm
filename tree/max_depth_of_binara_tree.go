@@ -43,3 +43,30 @@ func maxDepth1(root *TreeNode) int {
 	}
 	return depth
 }
+
+func maxDepth1(root *TreeNode) int {
+	var max = new(int)
+	if root == nil {
+		return 0
+	}
+	dfs(root, 0, max)
+	return *max + 1
+}
+
+func dfs(root *TreeNode, cur int, max *int) {
+	if root == nil {
+		if cur > *max {
+			*max = cur
+		}
+		cur--
+		return
+	}
+	if root.Left != nil {
+		cur++
+		dfs(root.Left, cur, max)
+	}
+	if root.Right != nil {
+		cur++
+		dfs(root.Right, cur, max)
+	}
+}

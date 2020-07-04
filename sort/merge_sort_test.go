@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"testing"
 )
-var tmp = make([]int, 200000)
-func Merge(nums []int, low, mid, high int) {
 
+var tmp = make([]int, 200000)
+
+func Merge(nums []int, low, mid, high int) {
 	i, j, size := low, mid+1, 0
-	for ;i <= mid && j <= high; size++ {
+	for ; i <= mid && j <= high; size++ {
 		if nums[i] <= nums[j] {
 			tmp[size] = nums[i]
 			i++

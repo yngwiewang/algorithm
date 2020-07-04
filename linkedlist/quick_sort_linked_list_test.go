@@ -7,50 +7,50 @@ import (
 
 // leetcode 148
 
-//func partitionSort(head, tail *ListNode) *ListNode{
-//	if head == tail {
-//		return head
-//	}
-//
-//	pivot, head := head, head.Next
-//	small, big := &ListNode{0, nil}, &ListNode{0, nil}
-//	preSmall, preBig := &ListNode{0, small}, &ListNode{0, big}
-//	var moveSmall, moveBig bool
-//	for ; head != tail.Next; head = head.Next {
-//		if head.Val >= pivot.Val {
-//			big.Next = head
-//			big = big.Next
-//			moveBig = true
-//		} else {
-//			small.Next = head
-//			small = small.Next
-//			moveSmall = true
-//		}
-//	}
-//	small.Next, pivot.Next, big.Next = nil, nil, nil
-//	if moveSmall {
-//		preSmall.Next.Next = partitionSort(preSmall.Next.Next, small)
-//		for ;small.Next != nil;small=small.Next{}
-//	}
-//	if moveBig {
-//		preBig.Next.Next = partitionSort(preBig.Next.Next, big)
-//	}
-//	small.Next, pivot.Next = pivot, preBig.Next.Next
-//	return preSmall.Next.Next
-//}
-//
-//func sortList(head *ListNode) *ListNode {
-//	if head == nil{
-//		return head
-//	}
-//	pre := &ListNode{0, head}
-//	for head.Next != nil {
-//		head = head.Next
-//	}
-//	tail := head
-//	res := partitionSort(pre.Next, tail)
-//	return res
-//}
+func partitionSort(head, tail *ListNode) *ListNode {
+	if head == tail {
+		return head
+	}
+	pivot, head := head, head.Next
+	small, big := &ListNode{0, nil}, &ListNode{0, nil}
+	preSmall, preBig := small, big
+	var moveSmall, moveBig bool
+	for ; head != tail.Next; head = head.Next {
+		if head.Val >= pivot.Val {
+			big.Next = head
+			big = big.Next
+			moveBig = true
+		} else {
+			small.Next = head
+			small = small.Next
+			moveSmall = true
+		}
+	}
+	small.Next, pivot.Next, big.Next = nil, nil, nil
+	if moveSmall {
+		preSmall.Next = partitionSort(preSmall.Next, small)
+		for ; small.Next != nil; small = small.Next {
+		}
+	}
+	if moveBig {
+		preBig.Next = partitionSort(preBig.Next, big)
+	}
+	small.Next, pivot.Next = pivot, preBig.Next
+	return preSmall.Next
+}
+
+func sortList(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	pre := &ListNode{0, head}
+	for head.Next != nil {
+		head = head.Next
+	}
+	tail := head
+	res := partitionSort(pre.Next, tail)
+	return res
+}
 
 //  method2
 
@@ -59,10 +59,9 @@ import (
 //		pre.Next, tail.Next = head, last
 //		return
 //	}
-//
 //	pivot, head := head, head.Next
 //	small, big := &ListNode{0, nil}, &ListNode{0, nil}
-//	preSmall, preBig := &ListNode{0, small}, &ListNode{0, big}
+//	preSmall, preBig := small, big
 //	var moveSmall, moveBig bool
 //	for ; head != tail.Next; head = head.Next {
 //		if head.Val >= pivot.Val {
@@ -75,29 +74,28 @@ import (
 //			moveSmall = true
 //		}
 //	}
-//	//small.Next, pivot.Next, big.Next = nil, nil, nil
-//	//pre.Next,big.Next = preSmall.Next.Next, last
+//	small.Next = pivot
 //	if moveSmall {
-//		pre.Next = preSmall.Next.Next
+//		pre.Next = preSmall.Next
 //	} else {
 //		pre.Next = pivot
 //	}
-//	big.Next = last
-//	small.Next, pivot.Next = pivot, preBig.Next.Next
+//	if moveBig{
+//		pivot.Next,big.Next = preBig.Next, last
+//	} else{
+//		pivot.Next = last
+//	}
 //	if moveSmall {
-//		partitionSort(preSmall.Next.Next, small, pre, pivot)
-//		//for ; small.Next != nil; small = small.Next {
-//		//}
+//		partitionSort(preSmall.Next, small, pre, pivot)
 //	}
 //	if moveBig {
-//		partitionSort(preBig.Next.Next, big, pivot, big.Next)
+//		partitionSort(preBig.Next, big, pivot, big.Next)
 //	}
-//	//small.Next, pivot.Next = pivot, preBig.Next.Next
 //
 //}
 //
 //func sortList(head *ListNode) *ListNode {
-//	if head == nil {
+//	if head == nil || head.Next == nil {
 //		return head
 //	}
 //	pre := &ListNode{0, head}
@@ -219,15 +217,15 @@ import (
 
 func TestPartitionSort1(t *testing.T) {
 	r := &ListNode{
-		Val: 4,
+		Val: 1,
 		Next: &ListNode{
-			4,
+			5,
 			&ListNode{
-				1,
+				3,
 				&ListNode{
 					4,
 					&ListNode{
-						5,
+						1,
 						nil,
 					},
 				},

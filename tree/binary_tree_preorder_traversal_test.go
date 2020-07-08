@@ -1,5 +1,10 @@
 package tree
 
+import (
+	"bytes"
+	"fmt"
+)
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode

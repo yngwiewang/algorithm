@@ -20,6 +20,7 @@ func QuickSort(n []int, p, r int) {
 func partition(n []int, p, r int) int {
 	q := rand.Intn(r-p) + p
 	pivot := n[q]
+	n[q], n[r] = n[r], n[q]
 	i := p
 	for j := p; j < r; j++ {
 		if n[j] < pivot {
@@ -86,11 +87,13 @@ func QuickSort3(a []int) {
 var n = RandSlice
 
 func TestQuick(t *testing.T) {
+	n := []int{5, 7, 1, 4, 3, 2}
 	QuickSort(n, 0, len(n)-1)
 	fmt.Println(n)
 }
 
 func TestQuick2(t *testing.T) {
+	n := []int{5, 7, 1, 4, 3, 2}
 	QuickSort2(n, 0, len(n)-1)
 	fmt.Println(n)
 }
@@ -123,14 +126,11 @@ func QC(n []int) {
 	QC(n[l+1:])
 }
 
-//func TestQc(t *testing.T) {
-//	for i := 0; i < 100; i++ {
-//		n := RandomIntSlice(10000)
-//		fmt.Println(n)
-//		QC(n)
-//		fmt.Println(n)
-//	}
-//}
+func TestQc(t *testing.T) {
+	n := []int{5, 7, 1, 4, 3, 2}
+	QC(n)
+	fmt.Println(n)
+}
 
 func TestRand(t *testing.T) {
 	rand.Seed(time.Now().UnixNano())
@@ -141,4 +141,39 @@ func TestRand(t *testing.T) {
 	for i := 0; i < 20; i++ {
 		fmt.Println(rand.Int() % 10)
 	}
+}
+
+func QuickSort4(n []int, p, r int) {
+	if p >= r {
+		return
+	}
+	q := partition4(n, p, r)
+	QuickSort4(n, p, q-1)
+	QuickSort4(n, q+1, r)
+
+}
+
+func partition4(n []int, p, r int) int {
+	q := rand.Intn(r-p) + p
+	pivot := n[q]
+
+	for {
+		for n[p] <= pivot {
+			p++
+		}
+		for n[r] > pivot {
+			r--
+		}
+		if p >= r {
+			break
+		}
+		n[p], n[r] = n[r], n[p]
+	}
+	return r
+}
+
+func TestQuickSort4(t *testing.T) {
+	n := []int{5, 1, 1, 2, 0, 0}
+	QuickSort4(n, 0, len(n)-1)
+	fmt.Println(n)
 }

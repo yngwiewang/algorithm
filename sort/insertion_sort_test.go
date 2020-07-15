@@ -131,3 +131,31 @@ func BenchmarkRand2(b *testing.B) {
 //	fmt.Println(nums)
 //
 //}
+
+func insertionSort20200715(nums []int) []int {
+	if len(nums) < 2 {
+		return nums
+	}
+	for i := 0; i < len(nums)-1; i++ {
+		j := i + 1
+		v := nums[j]
+		for ; j > 0; j-- {
+			if v < nums[j-1] {
+				nums[j] = nums[j-1]
+			} else {
+				break
+			}
+		}
+		nums[j] = v
+	}
+	return nums
+}
+
+func TestInsertionSort20200715(t *testing.T) {
+	a := [][]int{{5, 7, 4, 6, 1, 2}, {7, 4, 5, 6, 2, 1}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}
+	for _, l := range a {
+		fmt.Println("origin list: ", l)
+		insertionSort20200715(l)
+		fmt.Println("sorted list: ", l)
+	}
+}

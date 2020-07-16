@@ -48,3 +48,41 @@ func TestMergeSort(t *testing.T) {
 	MergeSort(a, 0, len(a)-1)
 	fmt.Println(a)
 }
+
+func mergeSort20200716(nums []int) []int {
+	if len(nums) < 2 {
+		return nums
+	}
+	mid := len(nums) / 2
+	left := mergeSort20200716(nums[:mid])
+	right := mergeSort20200716(nums[mid:])
+	return merge20200716(left, right)
+}
+
+func merge20200716(l, r []int) []int {
+	res := make([]int, len(l)+len(r))
+	i, j, k := 0, 0, 0
+	for i < len(l) && j < len(r) {
+		if l[i] <= r[j] {
+			res[k] = l[i]
+			i++
+		} else {
+			res[k] = r[j]
+			j++
+		}
+		k++
+	}
+	// 加判断性能更好
+	if i < len(l) {
+		copy(res[k:], l[i:])
+	} else {
+		copy(res[k:], r[j:])
+	}
+	return res
+}
+
+func TestMergeSort20200716(t *testing.T) {
+	a := []int{2, -1, 4, 3, 9, 7, 8, 6}
+	res := mergeSort20200716(a)
+	t.Log(res)
+}

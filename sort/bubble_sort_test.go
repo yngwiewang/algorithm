@@ -29,9 +29,27 @@ func BubbleSort(nums []int) {
 }
 
 func TestBubble(t *testing.T) {
-	nums := []int{4, 6, 5, 2, 3, 1}
-	fmt.Println(nums)
-	BubbleSort(nums)
-	fmt.Println(nums)
+	a := [][]int{{}, {1}, {2, -1}, {5, 7, 4, 6, 1, 2}, {7, 4, 5, 6, 2, 1}, {1, 2, 3, 4, 5}, {5, 4, 3, 2, 1}}
+	for _, l := range a {
+		fmt.Println("origin list: ", l)
+		res := BubbleSort20200716(l)
+		fmt.Println("sorted list: ", res)
+	}
 
+}
+
+func BubbleSort20200716(nums []int) []int {
+	for i := len(nums) - 1; i > 0; i-- {
+		swap := false
+		for j := 0; j < i; j++ {
+			if nums[j] > nums[j+1] {
+				nums[j], nums[j+1] = nums[j+1], nums[j]
+				swap = true
+			}
+		}
+		if !swap {
+			break
+		}
+	}
+	return nums
 }

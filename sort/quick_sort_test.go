@@ -87,13 +87,13 @@ func QuickSort3(a []int) {
 var n = RandSlice
 
 func TestQuick(t *testing.T) {
-	n := []int{5, 7, 1, 4, 3, 2}
+	n := []int{2, 1, 4}
 	QuickSort(n, 0, len(n)-1)
 	fmt.Println(n)
 }
 
 func TestQuick2(t *testing.T) {
-	n := []int{5, 7, 1, 4, 3, 2}
+	n := []int{2, 1, 4}
 	QuickSort2(n, 0, len(n)-1)
 	fmt.Println(n)
 }
@@ -143,37 +143,63 @@ func TestRand(t *testing.T) {
 	}
 }
 
-func QuickSort4(n []int, p, r int) {
-	if p >= r {
+func sort20200717(n []int, l, r int) {
+	if l >= r {
 		return
 	}
-	q := partition4(n, p, r)
-	QuickSort4(n, p, q-1)
-	QuickSort4(n, q+1, r)
-
-}
-
-func partition4(n []int, p, r int) int {
-	q := rand.Intn(r-p) + p
-	pivot := n[q]
-
-	for {
-		for n[p] <= pivot {
-			p++
+	m := rand.Intn(r-l) + l
+	pivot := n[m]
+	n[r], n[m] = n[m], n[r]
+	i := l
+	for j := l; j < r; j++ {
+		if n[j] <= pivot {
+			n[i], n[j] = n[j], n[i]
+			i++
 		}
-		for n[r] > pivot {
-			r--
-		}
-		if p >= r {
-			break
-		}
-		n[p], n[r] = n[r], n[p]
 	}
-	return r
+	n[r], n[i] = n[i], n[r]
+	sort20200717(n, l, i-1)
+	sort20200717(n, i+1, r)
+	return
 }
 
-func TestQuickSort4(t *testing.T) {
-	n := []int{5, 1, 1, 2, 0, 0}
-	QuickSort4(n, 0, len(n)-1)
-	fmt.Println(n)
+func quickSort20200717(nums []int) []int {
+	sort20200717(nums, 0, len(nums)-1)
+	return nums
+}
+
+var a = []int{2, 1, 4, 6, 3, 5, 7, 1, 2, 3, 4, 5}
+
+func TestQuickSort20200717(t *testing.T) {
+	res := quickSort20200717(a)
+	t.Log(res)
+}
+
+func sort20200717_1(n []int, l, r int) {
+	if l >= r {
+		return
+	}
+	i, j, p := l, r, n[l]
+	for i <= j {
+		if n[i] < p {
+			i++
+		} else if n[j] > p {
+			j--
+		} else {
+			n[i], n[j] = n[j], n[i]
+			i, j = i+1, j-1
+		}
+	}
+	sort20200717_1(n, l, j)
+	sort20200717_1(n, i, r)
+}
+
+func quickSort20200717_1(nums []int) []int {
+	sort20200717_1(nums, 0, len(nums)-1)
+	return nums
+}
+
+func TestQuickSort20200717_1(t *testing.T) {
+	res := quickSort20200717_1(a)
+	t.Log(res)
 }

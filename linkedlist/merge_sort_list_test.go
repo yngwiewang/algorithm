@@ -95,3 +95,51 @@ func TestMerge(t *testing.T) {
 	fmt.Println()
 
 }
+
+func sortListMerge20200718(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	slow, fast := head, head.Next
+	for fast != nil && fast.Next != nil {
+		slow, fast = slow.Next, fast.Next.Next
+	}
+	pre := &ListNode{}
+	left := head
+	right := slow.Next
+	slow.Next = nil
+	pre.Next = merge20200718(sortListMerge20200718(left), sortListMerge20200718(right))
+	return pre.Next
+}
+
+func merge20200718(l, r *ListNode) *ListNode {
+	pre := &ListNode{}
+	cur := pre
+	for l != nil && r != nil {
+		if l.Val < r.Val {
+			cur.Next = l
+			cur = l
+			l = l.Next
+		} else {
+			cur.Next = r
+			cur = r
+			r = r.Next
+		}
+	}
+	if l != nil {
+		cur.Next = l
+	}
+	if r != nil {
+		cur.Next = r
+	}
+	return pre.Next
+}
+
+func TestMergeSortLinkedList20200718(t *testing.T) {
+	a := arrayToLinkedList([]int{5, 4, 3, 2, 1})
+	l := sortListMerge20200718(a)
+	for ; l != nil; l = l.Next {
+		fmt.Printf("%d ", l.Val)
+	}
+	fmt.Println()
+}

@@ -2,6 +2,7 @@ package linkedlist
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 )
 
@@ -353,3 +354,47 @@ func TestPartitionSort1(t *testing.T) {
 //		l5 = l5.Next
 //	}
 //}
+
+func sortListQuick20200718(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	p := head.Val
+	l, m, r := new(ListNode), new(ListNode), new(ListNode)
+	prel, prem, prer := l, m, r
+	for ; head != nil; head = head.Next {
+		if head.Val < p {
+			l.Next = head
+			l = head
+		} else if head.Val > p {
+			r.Next = head
+			r = head
+		} else {
+			m.Next = head
+			m = head
+		}
+	}
+	l.Next, r.Next = nil, nil
+	prel.Next = sortListQuick20200718(prel.Next)
+	prer.Next = sortListQuick20200718(prer.Next)
+	tmp := prel
+	for tmp.Next != nil {
+		tmp = tmp.Next
+	}
+	tmp.Next, m.Next = prem.Next, prer.Next
+	return prel.Next
+}
+
+func TestSortList20200718(t *testing.T) {
+	a := arrayToLinkedList([]int{7})
+	l := sortListQuick20200718(a)
+	fmt.Println(l)
+}
+
+func (l *ListNode) string() string {
+	var res string
+	for l != nil {
+		res += " " + strconv.Itoa(l.Val)
+	}
+	return res
+}

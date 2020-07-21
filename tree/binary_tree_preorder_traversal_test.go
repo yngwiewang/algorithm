@@ -1,11 +1,5 @@
 package tree
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
 // leetcode 144
 
 func preorderTraversal(root *TreeNode) []int {

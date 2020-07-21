@@ -20,15 +20,6 @@ func postorderTraversal(root *TreeNode) []int {
 	return res
 }
 
-func postorderTraversal1(root *TreeNode) []int {
-	var res []int
-	if root == nil {
-		return res
-	}
-	dfsPostorderTraversal(root, &res)
-	return res
-}
-
 // 前序遍历后翻转
 
 func postorderTraversal2(root *TreeNode) []int {

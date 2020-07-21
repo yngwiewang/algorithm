@@ -44,7 +44,7 @@ func maxDepth1(root *TreeNode) int {
 	return depth
 }
 
-func maxDepth1(root *TreeNode) int {
+func maxDepth2(root *TreeNode) int {
 	var max = new(int)
 	if root == nil {
 		return 0

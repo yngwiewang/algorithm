@@ -23,37 +23,15 @@ func deleteDuplicates2(head *ListNode) *ListNode {
 			head = head.Next
 			pPre.Next = head
 		} else {
-			pPre.Next = head
-			pPre = pPre.Next
-			head = pPre.Next
+			pPre = head
+			head = head.Next
 		}
 	}
 	return p0.Next
 }
 
 func TestDeleteDuplicates2(t *testing.T) {
-	l := &ListNode{
-		Val: 1,
-		Next: &ListNode{
-			Val: 2,
-			Next: &ListNode{
-				Val: 2,
-				Next: &ListNode{
-					Val: 3,
-					Next: &ListNode{
-						Val: 3,
-						Next: &ListNode{
-							Val: 5,
-							Next: &ListNode{
-								Val:  6,
-								Next: nil,
-							},
-						},
-					},
-				},
-			},
-		},
-	}
+	l := arrayToLinkedList([]int{1, 1, 1, 1, 2, 2, 2, 5, 6, 7, 7, 7})
 
 	res := deleteDuplicates2(l)
 	for res != nil {

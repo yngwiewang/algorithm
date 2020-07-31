@@ -66,6 +66,10 @@ func threeSum1(nums []int) [][]int {
 					r--
 				}
 				r--
+				for l < len(nums)-1 && nums[l] == nums[l+1] {
+					l++
+				}
+				l++
 			} else if sum > 0 {
 				for r > 0 && nums[r] == nums[r-1] {
 					r--

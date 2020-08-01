@@ -1,3 +1,5 @@
 .idea
+.vscode
+linkedlist/debug.test
 temp_test.go
 test.txt

@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func partition_sort(head *ListNode, x int) *ListNode {
+func partitionSort(head *ListNode, x int) *ListNode {
 	pSmall, pBig, pEqual := &ListNode{}, &ListNode{}, &ListNode{}
 	p1, p2, p3 := pSmall, pBig, pEqual
 	for head != nil {
@@ -45,7 +45,7 @@ func TestPartitionSort(t *testing.T) {
 			},
 		},
 	}
-	partition_sort(l, 3)
+	partitionSort(l, 3)
 	head := l
 	for head != nil {
 		fmt.Printf("%v ", head.Val)

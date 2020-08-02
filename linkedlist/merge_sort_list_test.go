@@ -5,16 +5,6 @@ import (
 	"testing"
 )
 
-func arrayToLinkedList(a []int) *ListNode {
-	l := new(ListNode)
-	pre := l
-	for _, i := range a {
-		l.Next = &ListNode{i, nil}
-		l = l.Next
-	}
-	return pre.Next
-}
-
 func merge(l1, l2 *ListNode) *ListNode {
 	tmp := new(ListNode)
 	pre := tmp

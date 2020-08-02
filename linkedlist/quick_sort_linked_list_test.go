@@ -2,7 +2,6 @@ package linkedlist
 
 import (
 	"fmt"
-	"strconv"
 	"testing"
 )
 
@@ -389,12 +388,4 @@ func TestSortList20200718(t *testing.T) {
 	a := arrayToLinkedList([]int{7})
 	l := sortListQuick20200718(a)
 	fmt.Println(l)
-}
-
-func (l *ListNode) string() string {
-	var res string
-	for l != nil {
-		res += " " + strconv.Itoa(l.Val)
-	}
-	return res
 }

@@ -2,7 +2,6 @@ package linkedlist
 
 import (
 	"fmt"
-	"strings"
 	"testing"
 )
 
@@ -75,15 +74,4 @@ func TestRotateList(t *testing.T) {
 	a := arrayToLinkedList([]int{1, 2, 3, 4, 5})
 	l := rotateRight2(a, 5)
 	fmt.Println(l)
-}
-
-func (l *ListNode) String() string {
-	if l == nil {
-		return ""
-	}
-	var res []string
-	for ; l != nil; l = l.Next {
-		res = append(res, fmt.Sprintf("%d", l.Val))
-	}
-	return strings.Join(res, " ")
 }

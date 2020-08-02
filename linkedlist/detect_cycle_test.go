@@ -18,6 +18,7 @@ REACH:
 	for head != slow {
 		head, slow = head.Next, slow.Next
 	}
+	head.Next = nil
 	return head
 }
 

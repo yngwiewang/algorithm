@@ -1,6 +1,8 @@
 package linkedlist
 
-import "strconv"
+import (
+	"strconv"
+)
 
 // ListNode definition for singly-linked list.
 type ListNode struct {
@@ -18,10 +20,11 @@ func arrayToLinkedList(a []int) *ListNode {
 	return pre.Next
 }
 
-func (l *ListNode) string() string {
+func (l *ListNode) String() string {
 	var res string
 	for l != nil {
 		res += " " + strconv.Itoa(l.Val)
+		l = l.Next
 	}
 	return res
 }

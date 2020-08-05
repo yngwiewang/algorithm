@@ -62,8 +62,39 @@ func copyRandomList1(head *Node) *Node {
 		if i == 0 {
 			newHead = n
 		}
-		i++
+		i = 1
 		head = head.Next
+	}
+	return newHead
+}
+
+// 自己写一遍节点哈希表方法
+func copyRandomList2(head *Node) *Node {
+	if head == nil {
+		return nil
+	}
+	m := make(map[*Node]*Node)
+	var newHead *Node
+	var i int
+	for ; head != nil; head = head.Next {
+		n, ok := m[head]
+		if !ok {
+			n = &Node{Val: head.Val}
+			m[head] = n
+		}
+		if _, ok := m[head.Next]; !ok && head.Next != nil {
+			m[head.Next] = &Node{Val: head.Next.Val}
+		}
+		n.Next = m[head.Next]
+		if _, ok := m[head.Random]; !ok && head.Random != nil {
+			m[head.Random] = &Node{Val: head.Random.Val}
+		}
+		n.Random = m[head.Random]
+
+		if i == 0 {
+			newHead = n
+		}
+		i = 1
 	}
 	return newHead
 }

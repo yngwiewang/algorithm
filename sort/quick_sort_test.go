@@ -127,7 +127,7 @@ func QC(n []int) {
 }
 
 func TestQc(t *testing.T) {
-	n := []int{5, 7, 1, 4, 3, 2}
+	n := []int{5, 7, 1, 2, 6, 4}
 	QC(n)
 	fmt.Println(n)
 }
@@ -202,4 +202,33 @@ func quickSort20200717_1(nums []int) []int {
 func TestQuickSort20200717_1(t *testing.T) {
 	res := quickSort20200717_1(a)
 	t.Log(res)
+}
+
+func quickSort20200806(n []int) {
+	if len(n) < 2 {
+		return
+	}
+	l, r := 0, len(n)-1
+	p := rand.Intn(len(n))	
+	n[p], n[r] = n[r], n[p]	
+	for i := range n {
+		if n[i] < n[r] {
+			n[i], n[l] = n[l], n[i]
+			l++
+		}
+	}
+	n[l], n[r] = n[r], n[l]
+	quickSort20200806(n[:l])
+	quickSort20200806(n[l+1:])
+}
+
+func Test_quickSort20200806(t *testing.T) {
+	n := []int{5, 7, 4, 2, 6, 4}
+	quickSort20200806(n)
+	t.Log(n)
+}
+
+func Test_slice(t *testing.T) {
+	n := []int{5, 7, 1, 2, 6, 4}
+	t.Log(n[0:0], len(n[0:0]))
 }

@@ -1,6 +1,6 @@
 .idea
 .vscode
-linkedlist/debug.test
+*/debug.test
 temp_test.go
 test.txt
 node_targets.json

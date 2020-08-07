@@ -209,8 +209,8 @@ func quickSort20200806(n []int) {
 		return
 	}
 	l, r := 0, len(n)-1
-	p := rand.Intn(len(n))	
-	n[p], n[r] = n[r], n[p]	
+	p := rand.Intn(len(n))
+	n[p], n[r] = n[r], n[p]
 	for i := range n {
 		if n[i] < n[r] {
 			n[i], n[l] = n[l], n[i]
@@ -231,4 +231,37 @@ func Test_quickSort20200806(t *testing.T) {
 func Test_slice(t *testing.T) {
 	n := []int{5, 7, 1, 2, 6, 4}
 	t.Log(n[0:0], len(n[0:0]))
+}
+
+func qc20200807(n []int) {
+	if len(n) < 2 {
+		return
+	}
+	l, r := 0, len(n)-1
+	p := 0 //rand.Intn(len(n)) 随机有可能更慢
+	pivot := n[p]
+	// n[p], n[l] = n[l], n[p]
+	i, j := l, r
+	for i <= j {
+		if n[i] < pivot {
+			i++
+		} else if n[j] > pivot {
+			j--
+		} else {
+			n[i], n[j] = n[j], n[i]
+			i, j = i+1, j-1
+		}
+	}
+	if j > l {
+		qc20200807(n[l : j+1])
+	}
+	if i < r {
+		qc20200807(n[i : r+1])
+	}
+}
+
+func Test_qc20200807(t *testing.T) {
+	l := []int{5, 7, 1, 4, 2, 6}
+	qc20200807(l)
+	t.Log(l)
 }

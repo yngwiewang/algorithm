@@ -1,5 +1,12 @@
 package tree
 
+// TreeNode a
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
 func arrayToBinaryTree(a []int) (root *TreeNode) {
 	var nodes []*TreeNode
 	for _, v := range a {

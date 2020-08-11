@@ -1,4 +1,4 @@
-package minstack
+package stack
 
 import (
 	"testing"
@@ -34,7 +34,7 @@ func (this *MinStack) Top() int {
 	return this.stack[len(this.stack)-1][0]
 }
 
-func (this *MinStack) GetMin() int {	
+func (this *MinStack) GetMin() int {
 	return this.stack[len(this.stack)-1][1]
 }
 
@@ -49,16 +49,15 @@ func Test_minStack(t *testing.T) {
 	s := Constructor()
 	s.Push(-2)
 	s.Push(0)
-	s.Push(-3)	
+	s.Push(-3)
 	t.Log(s)
 
-	
 	t.Log(s.GetMin())
 
 	s.Pop()
-	
+
 	t.Log(s.Top())
-	
+
 	t.Log(s.GetMin())
 
 }

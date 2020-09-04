@@ -83,7 +83,7 @@ func Test_letterCombinations(t *testing.T) {
 		args args
 		want []string
 	}{
-		{"2,3", args{"546"}, []string{"jgm","jgn","jgo","jhm","jhn","jho","jim","jin","jio","kgm","kgn","kgo","khm","khn","kho","kim","kin","kio","lgm","lgn","lgo","lhm","lhn","lho","lim","lin","lio"}},
+		{"2,3", args{"546"}, []string{"jgm", "jgn", "jgo", "jhm", "jhn", "jho", "jim", "jin", "jio", "kgm", "kgn", "kgo", "khm", "khn", "kho", "kim", "kin", "kio", "lgm", "lgn", "lgo", "lhm", "lhn", "lho", "lim", "lin", "lio"}},
 		{"2,3", args{"23"}, []string{"ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"}},
 	}
 	for _, tt := range tests {

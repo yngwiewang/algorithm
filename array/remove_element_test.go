@@ -102,6 +102,18 @@ func removeElement4(nums []int, val int) int {
 	return last
 }
 
+// 复习一遍，不用交换，只要更新nums[cur]即可
+func removeElement5(nums []int, val int) int {
+	cur := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != val {
+			nums[cur], nums[i] = nums[i], nums[cur]
+			cur++
+		}
+	}
+	return cur
+}
+
 func Test_removeElement(t *testing.T) {
 	type args struct {
 		nums []int
@@ -113,10 +125,10 @@ func Test_removeElement(t *testing.T) {
 		want int
 	}{
 		{"", args{[]int{}, 1}, 0},
-		{"", args{[]int{2}, 1}, 1},
-		{"", args{[]int{2, 2}, 2}, 0},
-		{"", args{[]int{2, 1}, 1}, 1},
-		{"", args{[]int{2}, 2}, 0},
+		{"2", args{[]int{2}, 1}, 1},
+		{"2,2", args{[]int{2, 2}, 2}, 0},
+		{"2,1", args{[]int{2, 1}, 1}, 1},
+		{"2", args{[]int{2}, 2}, 0},
 		{"", args{[]int{2, 2, 2}, 1}, 3},
 		{"", args{[]int{3, 2, 2, 3}, 2}, 2},
 		{"", args{[]int{0, 1, 2, 2, 3, 0, 4, 2}, 2}, 5},
@@ -125,7 +137,7 @@ func Test_removeElement(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := removeElement4(tt.args.nums, tt.args.val); got != tt.want {
+			if got := removeElement5(tt.args.nums, tt.args.val); got != tt.want {
 				t.Errorf("removeElement() = %v, want %v", got, tt.want)
 			}
 		})

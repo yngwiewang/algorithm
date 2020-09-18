@@ -15,3 +15,16 @@ func DistanceInt(a, b int) int {
 	}
 	return a - b
 }
+
+// EqualInts 比较两个整数切片是否相等
+func EqualInts(a, b []int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	for i, v := range a {
+		if v != b[i] {
+			return false
+		}
+	}
+	return true
+}

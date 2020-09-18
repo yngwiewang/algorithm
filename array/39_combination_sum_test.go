@@ -25,6 +25,8 @@ func findCombinationSum(candidates []int, target, index int, tmp []int, res *[][
 		}
 		if target > candidates[i] {
 			findCombinationSum(candidates[i:], target-candidates[i], i, append(tmp, candidates[i]), res)
+		}else{
+			break  // 剪枝优化
 		}
 	}
 }
@@ -41,6 +43,8 @@ func findCombinationSum1(candidates []int, target, index int, tmp []int, res *[]
 		}
 		if target > candidates[i] {
 			findCombinationSum1(candidates, target-candidates[i], i, append(tmp, candidates[i]), res)
+		}else{
+			break  // 剪枝优化
 		}
 	}
 }
@@ -67,7 +71,7 @@ func Test_combinationSum(t *testing.T) {
 		{"2,3,6,7", args{[]int{2, 3, 6, 7}, 7}, [][]int{{2, 2, 3}, {7}}},
 		{"2,3,5", args{[]int{2, 3, 5}, 8}, [][]int{{2, 2, 2, 2}, {2, 3, 3}, {3, 5}}},
 		{"2,3", args{[]int{2, 3}, 2}, [][]int{{2}}},
-		{"2,3", args{[]int{2, 3}, 1}, [][]int{{}}},
+		{"2,3", args{[]int{2, 3}, 1}, [][]int{}},
 		{"2", args{[]int{2}, 2}, [][]int{{2}}},
 	}
 	for _, tt := range tests {

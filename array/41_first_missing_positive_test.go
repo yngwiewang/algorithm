@@ -31,8 +31,23 @@ func firstMissingPositive(nums []int) int {
 	return j
 }
 
-// 正确答案，O(n)，比较奇妙
+// 用map，非O(1)空间复杂度
 func firstMissingPositive1(ns []int) int {
+	m := make(map[int]bool)
+	for _, v := range ns {
+		m[v] = true
+	}
+	
+	for i:=1; i < len(m)+1; i++ {
+		if _, ok := m[i]; !ok {
+			return i
+		}
+	}
+	return len(m)+1
+}
+
+// 正确答案，O(n)，比较奇妙
+func firstMissingPositive2(ns []int) int {
 
 	// to cater for len(nums) < 2
 	ns = append(ns, 0)
@@ -66,10 +81,10 @@ func Test_firstMissingPositive(t *testing.T) {
 		args args
 		want int
 	}{
+		{"1,1,1,2,2,3,3,3,3,4,4,5", args{[]int{1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 5}}, 6},
 		{"[0,2,2,1,1]", args{[]int{0, 2, 2, 1, 1}}, 3},
 		{"-10,-3,-100,-1000,-239,1", args{[]int{-10, -3, -100, -1000, -239, 1}}, 2},
 		{"1,1,1,2,2,3,3,3,3,5", args{[]int{1, 1, 1, 2, 2, 3, 3, 3, 3, 5}}, 4},
-		{"1,1,1,2,2,3,3,3,3,4,4,5", args{[]int{1, 1, 1, 2, 2, 3, 3, 3, 3, 4, 4, 5}}, 6},
 		{"9,1", args{[]int{9, 1}}, 2},
 		{"1,2,0", args{[]int{1, 2, 0}}, 3},
 		{"9,2", args{[]int{9, 2}}, 1},

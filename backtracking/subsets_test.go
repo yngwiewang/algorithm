@@ -21,10 +21,7 @@ func backtrackSubset(nums []int, tmp []int, start int, result *[][]int) {
 	copy(cur, tmp)
 	*result = append(*result, cur)
 	for i := start; i < len(nums); i++ {
-		tmp = append(tmp, nums[i])
-
-		backtrackSubset(nums, tmp, i+1, result)
-		tmp = tmp[:len(tmp)-1]
+		backtrackSubset(nums, append(tmp, nums[i]), i+1, result)
 	}
 }
 

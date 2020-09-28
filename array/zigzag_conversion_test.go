@@ -50,7 +50,7 @@ func Test_convert(t *testing.T) {
 	}
 }
 
-func Test(t *testing.T) {
+func TestZigZagConvert(t *testing.T) {
 	a := 'a'
 	b := byte(a)
 	fmt.Printf("%T,%s  %T,%c\n", b, string(b), a, a)

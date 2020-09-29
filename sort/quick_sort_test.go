@@ -58,7 +58,32 @@ func QuickSort2(n []int, p, r int) {
 		QuickSort2(n, i+1, r)
 	}
 }
-
+func QuickSort2a(n []int, p, r int) {
+	for p < r {
+		i, j := p, r
+		q := rand.Intn(r-p) + p
+		pivot := n[q]
+		n[p], n[q] = n[q], n[p]
+		for i < j {
+			for i < j && n[j] >= pivot {
+				j--
+			}
+			if i < j {
+				n[i] = n[j]
+				i++
+			}
+			for i < j && n[i] < pivot {
+				i++
+			}
+			if i < j {
+				n[j] = n[i]
+			}
+		}
+		n[i] = pivot
+		QuickSort2(n, p, i-1)
+		p = i + 1
+	}
+}
 func QuickSort3(a []int) {
 	if len(a) < 2 {
 		return
@@ -92,10 +117,31 @@ func TestQuick(t *testing.T) {
 	fmt.Println(n)
 }
 
-func TestQuick2(t *testing.T) {
-	n := []int{2, 1, 4}
-	QuickSort2(n, 0, len(n)-1)
+func TestQuick2a(t *testing.T) {
+	a := 10
+	n := make([]int, a)
+	for i := 0; i < a; i++ {
+		n[i] = rand.Intn(30)
+	}
+	QuickSort2a(n, 0, len(n)-1)
 	fmt.Println(n)
+}
+
+func TestQuick2aSpeed(t *testing.T) {
+	a := 10000
+	n := make([]int, a)
+	for i := 0; i < a; i++ {
+		n[i] = rand.Intn(30000)
+	}
+	start := time.Now()
+	QuickSort2(n, 0, len(n)-1)
+	t.Log(time.Since(start))
+	start = time.Now()
+	QuickSort2a(n, 0, len(n)-1)
+	t.Log(time.Since(start))
+	start = time.Now()
+	QuickSort2(n, 0, len(n)-1)
+	t.Log(time.Since(start))
 }
 
 //func TestQuick3(t *testing.T) {

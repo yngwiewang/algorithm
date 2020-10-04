@@ -36,3 +36,14 @@ func EqualInts(a, b []int) bool {
 	}
 	return true
 }
+
+// MinIntInSlice 获得整形切片的最小值
+func MinIntInSlice(n []int) int {
+	min := n[0]
+	for _, v := range n {
+		if v < min {
+			min = v
+		}
+	}
+	return min
+}

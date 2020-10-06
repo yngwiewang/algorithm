@@ -39,9 +39,10 @@ func validPalindrome1(s string) bool {
 }
 
 // 找到中止回文时两个指针的位置，分别跳过每个指继续j判断是否回文
-func validPalindromeSimple(s string) bool{
-	for i:=0 ;i<len(s) /2;i++{
-		if s[i] != s[len(s)-i-1]{
+// ! 减少了判断，性能更高
+func validPalindromeSimple(s string) bool {
+	for i := 0; i < len(s)/2; i++ {
+		if s[i] != s[len(s)-i-1] {
 			return false
 		}
 	}
@@ -49,15 +50,14 @@ func validPalindromeSimple(s string) bool{
 }
 
 func validPalindrome(s string) bool {
-	for i:=0 ;i<len(s) /2;i++{
-		if s[i] != s[len(s)-i-1]{
-			j := len(s)-i-1
+	for i := 0; i < len(s)/2; i++ {
+		if s[i] != s[len(s)-i-1] {
+			j := len(s) - i - 1
 			return validPalindromeSimple(s[i:j]) || validPalindromeSimple(s[i+1:j+1])
 		}
 	}
 	return true
 }
-
 
 func Test_validPalindrome(t *testing.T) {
 	type args struct {
@@ -86,5 +86,18 @@ func Test_validPalindrome(t *testing.T) {
 				t.Errorf("validPalindrome() = %v, want %v", got, tt.want)
 			}
 		})
+	}
+}
+
+var a string = "lcupuufxoohdfpgjdmysgvhmvffcnqxjjxqncffvmhvgsymdjgpfdhooxfuupucul"
+
+func Benchmark_validPalindrome(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		validPalindrome(a)
+	}
+}
+func Benchmark_validPalindrome1(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		validPalindrome1(a)
 	}
 }

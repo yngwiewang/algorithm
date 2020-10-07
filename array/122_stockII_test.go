@@ -1,9 +1,13 @@
 package array
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/yngwiewang/algorithm/common"
+)
 
 // 122. Best Time to Buy and Sell Stock II
-func maxProfitII(prices []int) int {
+func maxProfitII1(prices []int) int {
 	profit := 0
 	for i := 0; i < len(prices)-1; i++ {
 		if prices[i] < prices[i+1] {
@@ -21,7 +25,7 @@ func max(a, b int) int {
 }
 
 // dp
-func maxProfitII1(prices []int) int {
+func maxProfitII2(prices []int) int {
 	if len(prices) < 2 {
 		return 0
 	}
@@ -56,4 +60,23 @@ func Test_maxProfitII(t *testing.T) {
 			}
 		})
 	}
+}
+
+// review 20201007
+// 当天不持有：max(前一天没有当天也不买，前一天持有当天卖出)
+// 当天持有：max(前一天没有当天买入，前一天持有当天不买)
+func maxProfitII(prices []int) int {
+	dp := make([][2]int, len(prices))
+	dp[0][0] = 0
+	dp[0][1] = -prices[0]
+	for i := 1; i < len(prices); i++ {
+		dp[i][0] = common.MaxInt(dp[i-1][0], dp[i-1][1]+prices[i])
+		dp[i][1] = common.MaxInt(dp[i-1][0]-prices[i], dp[i-1][1])
+	}
+	return dp[len(prices)-1][0]
+}
+
+func Test_maxProfitII1(t *testing.T) {
+	a := []int{1, 2}
+	maxProfitII(a)
 }

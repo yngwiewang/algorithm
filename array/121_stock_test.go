@@ -1,9 +1,12 @@
 package array
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 // 121. Best Time to Buy and Sell Stock
-func maxProfit(prices []int) int {	
+func maxProfit1(prices []int) int {	
 	if len(prices) == 0{
 		return 0
 	}
@@ -41,4 +44,18 @@ func Test_maxProfit(t *testing.T) {
 			}
 		})
 	}
+}
+
+// 复习
+func maxProfit(prices []int) int {	
+	minPrice, maxProfit := math.MaxInt32, 0
+	for i:=0;i<len(prices);i++{
+		if prices[i] < minPrice{
+			minPrice = prices[i]
+		}
+		if prices[i] - minPrice > maxProfit{
+			maxProfit = prices[i] - minPrice
+		}
+	}
+	return maxProfit
 }

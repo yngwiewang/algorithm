@@ -33,8 +33,8 @@ func Test_twoSumInSortedArray(t *testing.T) {
 		want []int
 	}{
 		{"2,7,11,15", args{[]int{2, 7, 11, 15}, 9}, []int{1, 2}},
-		{"2,3,4", args{[]int{2,3,4}, 6}, []int{1, 3}},
-		{"-1,0", args{[]int{-1,0}, -1}, []int{1, 2}},
+		{"2,3,4", args{[]int{2, 3, 4}, 6}, []int{1, 3}},
+		{"-1,0", args{[]int{-1, 0}, -1}, []int{1, 2}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

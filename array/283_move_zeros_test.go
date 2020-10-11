@@ -82,9 +82,20 @@ func BenchmarkMoveZeros1(b *testing.B) {
 	}
 }
 
-func TestMoveZeros(t *testing.T) {
+func TestMoveZeroes(t *testing.T) {
 	//a := []int{0, 0, 1, 0, 0, 0, 3, 12, 0, 0, 0,}
 	a := []int{4, 2, 4, 0, 0, 3, 0, 5, 1, 0, 0}
-	moveZeroes4(a)
+	moveZeroesA(a)
 	fmt.Println(a)
+}
+
+// 20201012 review
+func moveZeroesA(nums []int) {
+	j := 0
+	for i, v := range nums {
+		if v != 0 {
+			nums[i], nums[j] = nums[j], nums[i]
+			j++
+		}
+	}
 }

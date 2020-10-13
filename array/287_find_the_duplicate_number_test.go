@@ -20,7 +20,7 @@ func findDuplicateA(nums []int) int {
 }
 
 // sort and compare
-func findDuplicate(nums []int) int {
+func findDuplicateB(nums []int) int {
 	sort.Ints(nums)
 	for i := len(nums) - 1; i > 0; i-- {
 		if nums[i] == nums[i-1] {
@@ -28,6 +28,25 @@ func findDuplicate(nums []int) int {
 		}
 	}
 	return 0
+}
+
+// binary search
+func findDuplicate(nums []int) int {
+	i, j := 0, len(nums)-1
+	for i < j {
+		mid, count := i+(j-i)/2, 0
+		for _, n := range nums {
+			if n <= mid {
+				count++
+			}
+		}
+		if count > mid {
+			j = mid
+		} else {
+			i = mid + 1
+		}
+	}
+	return i
 }
 
 func Test_findDuplicate(t *testing.T) {

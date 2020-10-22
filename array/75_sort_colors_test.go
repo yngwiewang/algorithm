@@ -47,10 +47,32 @@ func sortColors1(nums []int) {
 		}
 	}
 }
+
+func sortColors2(n []int) {
+	i, j := 0, len(n)-1
+	for x := 0; x <= j; {
+		if n[x] == 0 {
+			n[x], n[i] = n[i], n[x]
+			i++
+			x++
+			continue
+		}
+		if n[x] == 2 {
+			n[x], n[j] = n[j], n[x]
+			j--
+			continue
+		}
+		x++
+	}
+	return
+}
+
 func Test_sortColors(t *testing.T) {
+	// c := []int{0}
+	// c := []int{1, 2, 0}
 	c := []int{2, 0, 1}
 	// c := []int{2, 0, 2, 1, 1, 0}
 	// c := []int{2}
-	sortColors1(c)
+	sortColors2(c)
 	t.Log(c)
 }

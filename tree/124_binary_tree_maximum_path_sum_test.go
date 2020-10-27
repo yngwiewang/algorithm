@@ -3,7 +3,11 @@ package tree
 import (
 	"math"
 	"testing"
+
+	"github.com/yngwiewang/algorithm/common"
 )
+
+// 124. Binary Tree Maximum Path Sum
 
 func maxPathSum(root *TreeNode) int {
 	res := math.MinInt32
@@ -87,4 +91,21 @@ func helperMaxPathSum2(root *TreeNode, res *int) int {
 	right := max(0, helperMaxPathSum2(root.Right, res))
 	*res = max(*res, left+right+root.Val)
 	return max(left, right) + root.Val
+}
+
+// review 20200127
+func maxPathSumA(root *TreeNode) int {
+	var ans int = math.MinInt32
+	oneSidePath(root, &ans)
+	return ans
+}
+
+func oneSidePath(root *TreeNode, ans *int) int {
+	if root == nil {
+		return 0
+	}
+	left := common.MaxInt(0, oneSidePath(root.Left, ans))
+	right := common.MaxInt(0, oneSidePath(root.Right, ans))
+	*ans = common.MaxInt(*ans, left+right+root.Val)
+	return common.MaxInt(left, right) + root.Val
 }

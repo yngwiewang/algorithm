@@ -47,3 +47,14 @@ func MinIntInSlice(n []int) int {
 	}
 	return min
 }
+
+// MaxIntInSlice 获得整形切片的最大值
+func MaxIntInSlice(n []int) int {
+	max := n[0]
+	for _, v := range n {
+		if v > max {
+			max = v
+		}
+	}
+	return max
+}

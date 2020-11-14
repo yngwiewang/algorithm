@@ -25,53 +25,52 @@ func Constructor1() Codec1 {
 	}
 }
 
-func (Codec1 *Codec1) preTravSer(root *TreeNode) {
+func (codec1 *Codec1) preTravSer(root *TreeNode) {
 	if root == nil {
-		Codec1.sb.WriteString(Codec1.null)
-		Codec1.sb.WriteString(Codec1.sep)
+		codec1.sb.WriteString(codec1.null)
+		codec1.sb.WriteString(codec1.sep)
 		return
 	}
-	Codec1.sb.WriteString(strconv.Itoa(root.Val))
-	Codec1.sb.WriteString(Codec1.sep)
-	Codec1.preTravSer(root.Left)
-	Codec1.preTravSer(root.Right)
+	codec1.sb.WriteString(strconv.Itoa(root.Val))
+	codec1.sb.WriteString(codec1.sep)
+	codec1.preTravSer(root.Left)
+	codec1.preTravSer(root.Right)
 }
-func (Codec1 *Codec1) preTravDeser() *TreeNode {
-	if len(Codec1.nodes) == 0 {
+func (codec1 *Codec1) preTravDeser() *TreeNode {
+	root := codec1.nodes[0]
+	codec1.nodes = codec1.nodes[1:]
+	if root == nil {
 		return nil
 	}
-	root := Codec1.nodes[0]
-	Codec1.nodes = Codec1.nodes[1:]
-	if root != nil {
-		root.Left = Codec1.preTravDeser()
-		root.Right = Codec1.preTravDeser()
-	}
+	root.Left = codec1.preTravDeser()
+	root.Right = codec1.preTravDeser()
+
 	return root
 }
 
 // Serializes a tree to a single string.
-func (Codec1 *Codec1) serialize(root *TreeNode) string {
-	Codec1.preTravSer(root)
-	return Codec1.sb.String()
+func (codec1 *Codec1) serialize(root *TreeNode) string {
+	codec1.preTravSer(root)
+	return codec1.sb.String()
 }
 
 // Deserializes your encoded data to tree.
-func (Codec1 *Codec1) deserialize(data string) *TreeNode {
-	ns := strings.Split(data, Codec1.sep)
-	Codec1.nodes = make([]*TreeNode, len(ns)-1)
+func (codec1 *Codec1) deserialize(data string) *TreeNode {
+	ns := strings.Split(data, codec1.sep)
+	codec1.nodes = make([]*TreeNode, len(ns)-1)
 	for i := 0; i < len(ns)-1; i++ {
 		if ns[i] == "#" {
-			Codec1.nodes[i] = nil
+			codec1.nodes[i] = nil
 		} else {
 			num, _ := strconv.Atoi(ns[i])
-			Codec1.nodes[i] = &TreeNode{num, nil, nil}
+			codec1.nodes[i] = &TreeNode{num, nil, nil}
 		}
 	}
 
-	return Codec1.preTravDeser()
+	return codec1.preTravDeser()
 }
 
-func Test_Codec1(t *testing.T) {
+func Test_codec1(t *testing.T) {
 	tree := arrayToBinaryTree([]int{1, 2, 3, 4, 5, 6})
 	c := Constructor1()
 	ser := c.serialize(tree)

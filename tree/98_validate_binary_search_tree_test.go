@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+// 98. Validate Binary Search Tree
+
 func isValidBST(root *TreeNode) bool {
 	inorder := inorderTraversal(root)
 	validate := true
@@ -15,11 +17,6 @@ func isValidBST(root *TreeNode) bool {
 		}
 	}
 	return validate
-}
-
-func TestIsValidBST(t *testing.T) {
-	tree := arrayToBinaryTree([]int{2, 1, 3})
-	t.Log(isValidBST1(tree))
 }
 
 // less mem
@@ -107,4 +104,27 @@ func isValidBSTHelper1(root *TreeNode) (l, r int, res bool) {
 	}
 	res = res && left && right
 	return
+}
+
+func isValidBST20201117(root *TreeNode) bool {
+	return isValidBSTHelper20201117(root, nil, nil)
+}
+
+func isValidBSTHelper20201117(root, min, max *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+	if min != nil && root.Val <= min.Val {
+		return false
+	}
+	if max != nil && root.Val >= max.Val {
+		return false
+	}
+	return isValidBSTHelper20201117(root.Left, min, root) &&
+		isValidBSTHelper20201117(root.Right, root, max)
+}
+
+func TestIsValidBST(t *testing.T) {
+	tree := arrayToBinaryTree([]int{2, 1, 3})
+	t.Log(isValidBST20201117(tree))
 }

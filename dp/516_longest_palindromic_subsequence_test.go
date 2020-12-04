@@ -34,9 +34,10 @@ func lpsHelper(s string, i, j int, memo [][]int) int {
 		return 0
 	}
 	if s[i] == s[j] {
-		return 2 + lpsHelper(s, i+1, j-1, memo)
+		memo[i][j] = 2 + lpsHelper(s, i+1, j-1, memo)
+	} else {
+		memo[i][j] = common.MaxInt(lpsHelper(s, i+1, j, memo), lpsHelper(s, i, j-1, memo))
 	}
-	memo[i][j] = common.MaxInt(lpsHelper(s, i+1, j, memo), lpsHelper(s, i, j-1, memo))
 	return memo[i][j]
 }
 
@@ -79,7 +80,7 @@ func Test_longestPalindromeSubseq(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := longestPalindromeSubseq1(tt.args.s); got != tt.want {
+			if got := longestPalindromeSubseq(tt.args.s); got != tt.want {
 				t.Errorf("longestPalindromeSubseq() = %v, want %v", got, tt.want)
 			}
 		})

@@ -16,9 +16,8 @@ func longestPalindrome(s string) int {
 	res := 0
 	hasEven := false
 	for _, v := range count {
-		if v/2 >= 1 {
-			res += v / 2 * 2
-		}
+		res += v / 2 * 2
+
 		if v%2 == 1 {
 			hasEven = true
 		}

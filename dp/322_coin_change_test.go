@@ -61,6 +61,59 @@ func coinChange1(coins []int, amount int) int {
 	return dp[len(dp)-1]
 }
 
+func coinChange20201306(coins []int, amount int) int {
+	memo := make(map[int]int)
+	return coinChangeHelper20201306(coins, amount, memo)
+
+}
+
+func coinChangeHelper20201306(coins []int, amount int, memo map[int]int) int {
+	if v, ok := memo[amount]; ok {
+		return v
+	}
+	if amount == 0 {
+		return 0
+	}
+	if amount < 0 {
+		return -1
+	}
+	res := math.MaxInt32
+	for _, coin := range coins {
+		tmp := coinChangeHelper20201306(coins, amount-coin, memo)
+		if tmp == -1 {
+			continue
+		} else {
+			res = common.MinInt(res, 1+tmp)
+		}
+	}
+	if res == math.MaxInt32 {
+		memo[amount] = -1
+	} else {
+		memo[amount] = res
+	}
+	return memo[amount]
+}
+
+func coinChangeDPTable20201306(coins []int, amount int) int {
+	dp := make([]int, amount+1)
+	for i := 1; i <= amount; i++ {
+		dp[i] = amount + 1
+	}
+	for i := 1; i <= amount; i++ {
+		for _, c := range coins {
+			if i-c < 0 {
+				continue
+			}
+			dp[i] = common.MinInt(dp[i], 1+dp[i-c])
+		}
+	}
+	if dp[amount] == amount+1 {
+		return -1
+	}
+	return dp[amount]
+
+}
+
 func Test_coinChange(t *testing.T) {
 	type args struct {
 		coins  []int
@@ -71,17 +124,17 @@ func Test_coinChange(t *testing.T) {
 		args args
 		want int
 	}{
-		{"6", args{[]int{1, 2, 5}, 100}, 20},
-		{"5", args{[]int{1}, 2}, 2},
-		{"2", args{[]int{2}, 3}, -1},
 		{"0", args{[]int{1, 2, 5}, 11}, 3},
+		{"2", args{[]int{2}, 3}, -1},
+		{"5", args{[]int{1}, 2}, 2},
+		{"6", args{[]int{1, 2, 5}, 100}, 20},
 		{"1", args{[]int{1, 2, 5}, 12}, 3},
 		{"3", args{[]int{1}, 0}, 0},
 		{"4", args{[]int{1}, 1}, 1},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := coinChange1(tt.args.coins, tt.args.amount); got != tt.want {
+			if got := coinChangeDPTable20201306(tt.args.coins, tt.args.amount); got != tt.want {
 				t.Errorf("coinChange() = %v, want %v", got, tt.want)
 			}
 		})

@@ -38,6 +38,32 @@ func maxEnvelopes(envelopes [][]int) int {
 	return res
 }
 
+func maxEnvelopes1(envelopes [][]int) int {
+	if len(envelopes) == 0  || len(envelopes[0]) == 0{
+		return 0
+	}
+	sort.Slice(envelopes, func(i, j int) bool {
+		if envelopes[i][0] == envelopes[j][0] {
+			return envelopes[i][1] > envelopes[j][1]
+		}
+		return envelopes[i][0] < envelopes[j][0]
+	})
+	fmt.Println(envelopes)
+	dp := make([]int, len(envelopes))
+	res := 1
+	for i := range envelopes {
+		dp[i] = 1
+		for j := 0; j < i; j++ {
+			if envelopes[j][1] < envelopes[i][1]  {
+				dp[i] = common.MaxInt(dp[i], 1+dp[j])
+				res = common.MaxInt(res, dp[i])
+			}
+		}
+	}
+	fmt.Println(dp)
+	return res
+}
+
 func Test_maxEnvelopes(t *testing.T) {
 	type args struct {
 		envelopes [][]int
@@ -55,7 +81,7 @@ func Test_maxEnvelopes(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := maxEnvelopes(tt.args.envelopes); got != tt.want {
+			if got := maxEnvelopes1(tt.args.envelopes); got != tt.want {
 				t.Errorf("maxEnvelopes() = %v, want %v", got, tt.want)
 			}
 		})

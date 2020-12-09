@@ -10,7 +10,7 @@ import (
 // 1143. Longest Common Subsequence
 // dp, recursive
 func longestCommonSubsequence1(text1 string, text2 string) int {
-	memo := make(map[[2]int]int)
+	memo := make(map[[2]int]int, len(text1) + len(text2))
 	res := dpLCS1(text1, 0, text2, 0, memo)
 	return res
 }
@@ -81,6 +81,27 @@ func longestCommonSubsequence(text1 string, text2 string) int {
 	return dp[len(text1)][len(text2)]
 }
 
+func lcs20201209(text1 string, text2 string) int {
+	m, n := len(text1), len(text2)
+	dp := make([][]int, m+1)
+	for i := range dp {
+		dp[i] = make([]int, n+1)
+	}
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n; j++ {
+			if text1[i-1] == text2[j-1] {
+				dp[i][j] = 1 + dp[i-1][j-1]
+			} else {
+				dp[i][j] = common.MaxInt(dp[i-1][j], dp[i][j-1])
+			}
+		}
+	}
+	for _, v := range dp {
+		fmt.Println(v)
+	}
+	return dp[m][n]
+}
+
 func Test_longestCommonSubsequence(t *testing.T) {
 	type args struct {
 		text1 string
@@ -91,6 +112,8 @@ func Test_longestCommonSubsequence(t *testing.T) {
 		args args
 		want int
 	}{
+		{"bsbininm, jmjkbkjkv", args{"bsbininm", "jmjkbkjkv"}, 1},
+		{"ezupkr, ubmrapg", args{"ezupkr", "ubmrapg"}, 2},
 		{"abcde, ace", args{"abcde", "ace"}, 3},
 		{"abcde, ae", args{"abcde", "ae"}, 2},
 		{"abc, abc", args{"abc", "abc"}, 3},
@@ -100,7 +123,7 @@ func Test_longestCommonSubsequence(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := longestCommonSubsequence(tt.args.text1, tt.args.text2); got != tt.want {
+			if got := longestCommonSubsequence1(tt.args.text1, tt.args.text2); got != tt.want {
 				t.Errorf("longestCommonSubsequence() = %v, want %v", got, tt.want)
 			}
 		})

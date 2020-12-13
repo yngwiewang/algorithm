@@ -54,7 +54,7 @@ func minInsertions(s string) int {
 	for i := range dp {
 		dp[i] = make([]int, len(s))
 	}
-	for i := len(s) - 1; i >= 0; i-- {
+	for i := len(s) - 2; i >= 0; i-- {
 		for j := i + 1; j < len(s); j++ {
 			if s[i] == s[j] {
 				dp[i][j] = dp[i+1][j-1]

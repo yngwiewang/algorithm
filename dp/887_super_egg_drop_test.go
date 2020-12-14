@@ -21,7 +21,7 @@ func superEggDrop(K int, N int) int {
 	return superEggDropHelper(K, N, memo)
 }
 
-func superEggDropHelper(k, n int, memo [][]int) int {
+func superEggDropHelper1(k, n int, memo [][]int) int {
 	if k == 1 {
 		return n
 	}
@@ -36,6 +36,36 @@ func superEggDropHelper(k, n int, memo [][]int) int {
 		res = common.MinInt(res, 1+common.MaxInt(superEggDropHelper(k-1, i-1, memo),
 			superEggDropHelper(k, n-i, memo)))
 	}
+	memo[k][n] = res
+	return memo[k][n]
+}
+
+// binary search optimize
+func superEggDropHelper(k, n int, memo [][]int) int {
+	if k == 1 {
+		return n
+	}
+	if n == 0 {
+		return 0
+	}
+	if memo[k][n] != -1 {
+		return memo[k][n]
+	}
+	res := math.MaxInt32
+	l, h := 1, n
+	for l <= h {
+		m := (l + h) / 2
+		broken := superEggDropHelper(k-1, m-1, memo)
+		notBroken := superEggDropHelper(k, n-m, memo)
+		if broken > notBroken {
+			h = m - 1
+			res = common.MinInt(res, broken+1)
+		} else {
+			l = m + 1
+			res = common.MinInt(res, notBroken+1)
+		}
+	}
+
 	memo[k][n] = res
 	return memo[k][n]
 }

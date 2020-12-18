@@ -33,3 +33,27 @@ func robIIIHelper(root *TreeNode, memo map[*TreeNode]int) int {
 	memo[root] = common.MaxInt(do_cur, not_do_cur)
 	return memo[root]
 }
+
+func robIII20201218(root *TreeNode) int {
+	memo := make(map[*TreeNode]int)
+	return robIIIHelper20201218(root, memo)
+}
+
+func robIIIHelper20201218(root *TreeNode, memo map[*TreeNode]int) int {
+	if root == nil {
+		return 0
+	}
+	if v, ok := memo[root]; ok {
+		return v
+	}
+	do := root.Val
+	if root.Left != nil {
+		do += robIIIHelper20201218(root.Left.Left, memo) + robIIIHelper20201218(root.Left.Right, memo)
+	}
+	if root.Right != nil {
+		do += robIIIHelper20201218(root.Right.Left, memo) + robIIIHelper20201218(root.Right.Right, memo)
+	}
+	notDo := robIIIHelper20201218(root.Left, memo) + robIIIHelper20201218(root.Right, memo)
+	memo[root] = common.MaxInt(do, notDo)
+	return memo[root]
+}

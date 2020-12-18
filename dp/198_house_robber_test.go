@@ -53,6 +53,15 @@ func robHelper(nums []int, i int, memo []int) int {
 	return memo[i]
 }
 
+func rob20201218(nums []int) int {
+	dpi, dp1, dp2 := 0, 0, 0
+	for i := len(nums) - 1; i >= 0; i-- {
+		dpi = common.MaxInt(nums[i]+dp2, dp1)
+		dp2, dp1 = dp1, dpi
+	}
+	return dp1
+}
+
 func Test_rob(t *testing.T) {
 	type args struct {
 		nums []int
@@ -66,7 +75,7 @@ func Test_rob(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := rob2(tt.args.nums); got != tt.want {
+			if got := rob20201218(tt.args.nums); got != tt.want {
 				t.Errorf("rob() = %v, want %v", got, tt.want)
 			}
 		})

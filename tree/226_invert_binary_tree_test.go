@@ -3,7 +3,7 @@ package tree
 import "testing"
 
 // 226. Invert Binary Tree
-// recursive
+// recursive, postorder
 func invertTree(root *TreeNode) *TreeNode {
 	if root == nil {
 		return nil
@@ -11,6 +11,16 @@ func invertTree(root *TreeNode) *TreeNode {
 	root.Left = invertTree(root.Left)
 	root.Right = invertTree(root.Right)
 	root.Left, root.Right = root.Right, root.Left
+	return root
+}
+
+func invertTreePreorder(root *TreeNode) *TreeNode {
+	if root == nil {
+		return nil
+	}
+	root.Left, root.Right = root.Right, root.Left
+	root.Left = invertTree(root.Left)
+	root.Right = invertTree(root.Right)
 	return root
 }
 
@@ -33,6 +43,6 @@ func invertTreeA(root *TreeNode) *TreeNode {
 
 func Test_invertTree(t *testing.T) {
 	a := arrayToBinaryTree([]int{1, 2})
-	invertTreeA(a)
+	invertTreePreorder(a)
 
 }

@@ -1,7 +1,7 @@
 package tree
 
 // 222. Count Complete Tree Nodes
-
+// didn't use binary search
 func countNodes(root *TreeNode) int {
 	if root == nil {
 		return 0

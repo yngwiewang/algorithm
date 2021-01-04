@@ -39,7 +39,25 @@ func findAnagrams1(s string, p string) []int {
 	return res
 }
 
+// use array, more faster
 func findAnagrams(s string, p string) []int {
+	window, need := [128]byte{}, [128]byte{}
+	for _, v := range p {
+		need[byte(v)]++
+	}
+	res := []int{}
+	l := 0
+	for r, c := range s {
+		window[byte(c)]++
+		for r-l+1 >= len(p) {
+			if window == need {
+				res = append(res, l)
+			}
+			window[byte(s[l])]--
+			l++
+		}
+	}
+	return res
 }
 
 func Test_findAnagrams(t *testing.T) {

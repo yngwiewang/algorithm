@@ -4,23 +4,45 @@ import "testing"
 
 // 494. Target Sum
 
-func findTargetSumWays(nums []int, S int) int {
+func findTargetSumWays1(nums []int, S int) int {
 	// memo := map[[2]int]int{}
 	res := 0
-	findTargetsSumWaysHelper(nums, &res, 0, 0, S)
+	findTargetsSumWaysHelper1(nums, &res, 0, 0, S)
 	return res
 
 }
 
-func findTargetsSumWaysHelper(nums []int, res *int, i, sum, s int) {
+func findTargetsSumWaysHelper1(nums []int, res *int, i, sum, s int) {
 	if i == len(nums) {
 		if sum == s {
 			*res++
 		}
 		return
 	}
-	findTargetsSumWaysHelper(nums, res, i+1, sum+nums[i], s)
-	findTargetsSumWaysHelper(nums, res, i+1, sum-nums[i], s)
+	findTargetsSumWaysHelper1(nums, res, i+1, sum+nums[i], s)
+	findTargetsSumWaysHelper1(nums, res, i+1, sum-nums[i], s)
+}
+
+// recursive with memo
+func findTargetSumWays(nums []int, S int) int {
+	memo := map[[2]int]int{}
+	return findTargetsSumWaysHelper(nums, 0, S, memo)
+}
+
+func findTargetsSumWaysHelper(nums []int, i, s int, memo map[[2]int]int) int {
+	if i == len(nums) {
+		if s == 0 {
+			return 1
+		}
+		return 0
+	}
+	if v, ok := memo[[2]int{i, s}]; ok {
+		return v
+	}
+	res := findTargetsSumWaysHelper(nums, i+1, s+nums[i], memo) +
+		findTargetsSumWaysHelper(nums, i+1, s-nums[i], memo)
+	memo[[2]int{i, s}] = res
+	return res
 }
 
 func Test_findTargetSumWays(t *testing.T) {

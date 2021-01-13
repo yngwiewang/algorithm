@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// 206. Reverse Linked List
 // loop
 func reverseList(head *ListNode) *ListNode {
 	var pre *ListNode
@@ -76,8 +77,19 @@ func reverseList2020110703(head *ListNode) *ListNode {
 	return pre
 }
 
+func reverseList20210113(head *ListNode) *ListNode {
+	var pre *ListNode
+	for head != nil {
+		tmp := head
+		head = head.Next
+		tmp.Next = pre
+		pre = tmp
+	}
+	return pre
+}
+
 func TestReverseList(t *testing.T) {
 	l := arrayToLinkedList([]int{1, 2, 3, 4})
-	h := reverseList2020110703(l)
+	h := reverseList20210113(l)
 	fmt.Println(h)
 }

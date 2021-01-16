@@ -17,16 +17,14 @@ func insertIntoBSTHelper(root *TreeNode, val int) {
 		if root.Right == nil {
 			root.Right = &TreeNode{val, nil, nil}
 			return
-		} else {
-			insertIntoBSTHelper(root.Right, val)
 		}
+		insertIntoBSTHelper(root.Right, val)
 	} else {
 		if root.Left == nil {
 			root.Left = &TreeNode{val, nil, nil}
 			return
-		} else {
-			insertIntoBSTHelper(root.Left, val)
 		}
+		insertIntoBSTHelper(root.Left, val)
 	}
 }
 
@@ -101,17 +99,18 @@ func insertIntoBST202011211(root *TreeNode, val int) *TreeNode {
 }
 
 func insertIntoBST202011212(root *TreeNode, val int) *TreeNode {
-	if root == nil{
+	if root == nil {
 		return &TreeNode{val, nil, nil}
 	}
-	if val < root.Val{
+	if val < root.Val {
 		root.Left = insertIntoBST202011212(root.Left, val)
 	} else {
 		root.Right = insertIntoBST202011212(root.Right, val)
 	}
 	return root
 }
-func Test_insertBST20201121(t *testing.T) {
+
+func Test_insertBST(t *testing.T) {
 	c := Constructor()
 	tree := c.deserialize("8,#,55,39,#,11,#,#,23,#,#,")
 	instered := insertIntoBST202011212(tree, 17)

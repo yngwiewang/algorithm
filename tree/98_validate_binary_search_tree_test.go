@@ -124,7 +124,23 @@ func isValidBSTHelper20201117(root, min, max *TreeNode) bool {
 		isValidBSTHelper20201117(root.Right, root, max)
 }
 
+func isValidBST20210116(root *TreeNode) bool {
+	return isValidBSTHelper20210116(root, nil, nil)
+}
+
+func isValidBSTHelper20210116(root, min, max *TreeNode) bool {
+	if root == nil {
+		return true
+	}
+	if min != nil && root.Val <= min.Val ||
+		max != nil && root.Val >= max.Val {
+		return false
+	}
+	return isValidBSTHelper20210116(root.Left, min, root) &&
+		isValidBSTHelper20210116(root.Right, root, max)
+}
+
 func TestIsValidBST(t *testing.T) {
 	tree := arrayToBinaryTree([]int{2, 1, 3})
-	t.Log(isValidBST20201117(tree))
+	t.Log(isValidBST20210116(tree))
 }

@@ -37,10 +37,28 @@ func lengthOfLIS20201206(nums []int) int {
 				dp[i] = common.MaxInt(dp[i], dp[j]+1)
 			}
 			// ! 如果把res的比较放在这里要注意res的初始值是1而不能是0
-			res = common.MaxInt(res, dp[i]) 
+			res = common.MaxInt(res, dp[i])
 		}
 	}
 	fmt.Println(dp)
+	return res
+}
+
+func lengthOfLIS20210116(nums []int) int {
+	dp := make([]int, len(nums))
+	res := 1
+	for i := range dp {
+		dp[i] = 1
+	}
+	for i := 0; i < len(nums); i++ {
+		for j := 0; j < i; j++ {
+			if nums[i] > nums[j] {
+				dp[i] = common.MaxInt(dp[i], dp[j]+1)
+				res = common.MaxInt(res, dp[i])
+				fmt.Println(i, j, dp)
+			}
+		}
+	}
 	return res
 }
 
@@ -58,10 +76,11 @@ func Test_lengthOfLIS(t *testing.T) {
 		{"[10,9,2,5,3,7,101,18]", args{[]int{10, 9, 2, 5, 3, 7, 101, 18}}, 4},
 		{"[0,1,0,3,2,3]", args{[]int{0, 1, 0, 3, 2, 3}}, 4},
 		{"[7,7,7,7,7,7,7]", args{[]int{7, 7, 7, 7, 7, 7, 7}}, 1},
+		{"[1,4,3,4,2,3,4]", args{[]int{1, 4, 3, 4, 2, 3, 4}}, 4},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := lengthOfLIS20201206(tt.args.nums); got != tt.want {
+			if got := lengthOfLIS20210116(tt.args.nums); got != tt.want {
 				t.Errorf("lengthOfLIS() = %v, want %v", got, tt.want)
 			}
 		})

@@ -28,6 +28,32 @@ func longestPalindrome(s string) int {
 	return res
 }
 
+func isOdd(n int) bool {
+	if n%2 == 0 {
+		return true
+	}
+	return false
+}
+
+func longestPalindrome20210113(s string) int {
+	count := make(map[byte]int)
+	for i := range s {
+		count[byte(s[i])]++
+	}
+	res := 0
+	hasEven := false
+	for _, v := range count {
+		res += v / 2 * 2
+		if v%2 == 1 {
+			hasEven = true
+		}
+	}
+	if hasEven {
+		res++
+	}
+	return res
+}
+
 func Test_longestPalindrome(t *testing.T) {
 	type args struct {
 		s string
@@ -43,7 +69,7 @@ func Test_longestPalindrome(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := longestPalindrome(tt.args.s); got != tt.want {
+			if got := longestPalindrome20210113(tt.args.s); got != tt.want {
 				t.Errorf("longestPalindrome() = %v, want %v", got, tt.want)
 			}
 		})

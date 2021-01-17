@@ -31,6 +31,28 @@ func longestPalindrome(s string) string {
 	return s[l : r+1]
 }
 
+func longestPalindrome20210117(s string) string {
+	if len(s) <= 1 {
+		return s
+	}
+	dp := make([][]bool, len(s))
+	for i := range dp {
+		dp[i] = make([]bool, len(s))
+	}
+	l, maxLen := 0, 1
+	for j := 1; j < len(s); j++ {
+		for i := 0; i < j; i++ {
+			if s[i] == s[j] && (j-i < 3 || dp[i+1][j-1]) {
+				dp[i][j] = true
+				if dp[i][j] && j-i+1 > maxLen {
+					l, maxLen = i, j-i+1
+				}
+			}
+		}
+	}
+	return s[l : l+maxLen]
+}
+
 func Test_longestPalindrome(t *testing.T) {
 	type args struct {
 		s string
@@ -40,13 +62,14 @@ func Test_longestPalindrome(t *testing.T) {
 		args args
 		want string
 	}{
-		{"aa", args{"aa"}, "a"},
+		{"ac", args{"ac"}, "a"},
+		{"aa", args{"aa"}, "aa"},
 		{"a", args{"a"}, "a"},
 		{"babad", args{"babad"}, "aba"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := longestPalindrome(tt.args.s); got != tt.want {
+			if got := longestPalindrome20210117(tt.args.s); got != tt.want {
 				t.Errorf("longestPalindrome() = %v, want %v", got, tt.want)
 			}
 		})

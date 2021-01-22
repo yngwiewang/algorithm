@@ -1,6 +1,7 @@
 package stack
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -77,9 +78,36 @@ func dailyTemperatures(T []int) []int {
 	return res
 }
 
-func Test_dayliTemperatures(t *testing.T) {
-	// a := []int{73, 74, 75, 71, 69, 72, 76, 73}
-	a := []int{89, 62, 70, 58, 47, 47, 46, 76, 100, 70}
-	res := dailyTemperatures(a)
-	t.Log(res)
+func dailyTemperatures20210122(T []int) []int {
+	res := make([]int, len(T))
+	stack := []int{}
+	for i, v := range T {
+		for len(stack) != 0 && T[stack[len(stack)-1]] < v {
+			res[stack[len(stack)-1]] = i - stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+		}
+		stack = append(stack, i)
+	}
+	return res
+}
+
+func Test_dailyTemperatures20210122(t *testing.T) {
+	type args struct {
+		T []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want []int
+	}{
+		{"1", args{[]int{73, 74, 75, 71, 69, 72, 76, 73}}, []int{1, 1, 4, 2, 1, 1, 0, 0}},
+		{"2", args{[]int{89, 62, 70, 58, 47, 47, 46, 76, 100, 70}}, []int{8, 1, 5, 4, 3, 2, 1, 1, 0, 0}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := dailyTemperatures20210122(tt.args.T); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("dailyTemperatures20210122() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }

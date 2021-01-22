@@ -51,7 +51,7 @@ func removeNthFromEnd2(head *ListNode, n int) *ListNode {
 	for i := 0; i < n; i++ {
 		fast = fast.Next
 	}
-	if fast == nil{
+	if fast == nil {
 		return head.Next
 	}
 	slow := pre
@@ -60,6 +60,19 @@ func removeNthFromEnd2(head *ListNode, n int) *ListNode {
 	}
 	slow.Next = slow.Next.Next
 
+	return pre.Next
+}
+
+func removeNthFromEnd20210122(head *ListNode, n int) *ListNode {
+	pre := &ListNode{0, head}
+	fast, slow := pre, pre
+	for i := 0; i < n; i++ {
+		fast = fast.Next
+	}
+	for fast.Next != nil {
+		fast, slow = fast.Next, slow.Next
+	}
+	slow.Next = slow.Next.Next
 	return pre.Next
 }
 
@@ -91,7 +104,7 @@ func Test_removeNthFromEnd(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := removeNthFromEnd2(tt.args.head, tt.args.n); !reflect.DeepEqual(got, tt.want) {
+			if got := removeNthFromEnd20210122(tt.args.head, tt.args.n); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("removeNthFromEnd() = %v, want %v", got, tt.want)
 			}
 		})
